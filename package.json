@@ -1,0 +1,31 @@
+{
+  "name": "jk-wxhandler",
+  "version": "1.0.1",
+  "description": "这个类库用于前端开发者很方便的使用微信JSSDK，而且这个组件封装了一些常用的特殊方法，比如分享。组件目前是基于VUE进行开发设计的。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kami1983/jk-wxhandler.git"
+  },
+  "keywords": [
+    "wx",
+    "jssdk",
+    "wxhandler"
+  ],
+  "author": "kami1983",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kami1983/jk-wxhandler/issues"
+  },
+  "homepage": "https://github.com/kami1983/jk-wxhandler#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "jk-felib": "^1.1.9"
+  }
+}
