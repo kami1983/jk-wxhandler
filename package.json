@@ -4,7 +4,7 @@
   "description": "这个类库用于前端开发者很方便的使用微信JSSDK，而且这个组件封装了一些常用的特殊方法，比如分享。组件目前是基于VUE进行开发设计的。",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "babel src -d lib"
   },
   "repository": {
@@ -23,9 +23,18 @@
   },
   "homepage": "https://github.com/kami1983/jk-wxhandler#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-1": "^6.24.1",
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-es2015": "^7.0.0-beta.53",
+    "@babel/preset-stage-1": "^7.8.3",
+    "babel-jest": "^26.3.0",
+    "jest": "^26.4.2",
     "jk-felib": "^1.1.9"
+  },
+  "dependencies": {
+    "anymatch": "^3.1.1"
   }
 }

@@ -190,3 +190,39 @@ this.$wxhandler.catch_wxsdk().then((wxsdk) => {
 })
 
 ```
+
+### 使用新版本babel
+
+yarn add @babel/plugin-transform-runtime --dev
+yarn add @babel/plugin-proposal-class-properties --dev
+
+
+### 初始化测试
+
+
+// 初始化配置信息
+jest --init
+// 添加Babel
+yarn add babel-jest --dev
+yarn add @babel/core --dev
+yarn add @babel/preset-env --dev
+yarn add @babel/cli --dev
+yarn add anymatch --dev
+
+
+
+
+
+// 添加 babel.config.js
+module.exports = {
+  presets: [
+    [
+      '@babel/preset-env',
+      {
+        targets: {
+          node: 'current',
+        },
+      },
+    ],
+  ],
+};
