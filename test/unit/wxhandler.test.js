@@ -134,6 +134,7 @@ describe('测试wxhandler 对象', () => {
         let oper = new CWXHandler(options)
         expect(oper).toBeInstanceOf(CWXHandler)
 
+        oper
     })
 
 
