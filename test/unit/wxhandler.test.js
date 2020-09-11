@@ -114,11 +114,27 @@ describe('测试wxhandler 对象', () => {
     /**
      * 测试 install 方法，生成微信对象
      * */
-    it('', async () => {
-        // wxhandler.install(Vue, options)
-        //
+    it('测试 Vue.use 用到的 install 方法，生成微信对象 ', async () => {
+
+        // 通过use 进行加载组件
+        Vue.use(wxhandler, options)
+
         let vueobj = new Vue(options)
-        console.log("#####",vueobj)
-        console.log("@@@@@@", vueobj.$wxhandler)
+
+        // 断言对象加载成功，create
+        expect(vueobj.$wxhandler).toBeInstanceOf(CWXHandler)
+
     })
+
+    /**
+     * 测试 makeDefaultWxShare 方法
+     * */
+    it('测试 makeDefaultWxShare 该方法用于快速生成默认的分享页面。 ', async () => {
+
+        let oper = new CWXHandler(options)
+        expect(oper).toBeInstanceOf(CWXHandler)
+
+    })
+
+
 })
