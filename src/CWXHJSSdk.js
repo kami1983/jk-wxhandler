@@ -27,12 +27,20 @@ export class CWXHJSSdk {
 
 
     /**
-     * 创建一个微信配置对象
+     * 创建一个微信配置对象（该函数已经作废，通过makeWx 函数代替）
      * @param {Mixed}  config 配置文件信息，不填写则使用配置方法最终传入的数据
      * @return
      * */
     wxConfig(config = undefined) {
+        return this.makeWx(config)
+    }
 
+    /**
+     * 创建一个微信配置对象
+     * @param {Mixed}  config 配置文件信息，不填写则使用配置方法最终传入的数据
+     * @return
+     * */
+    makeWx(config = undefined) {
         // 准备配置文件
         let confgjson = {}
         if (undefined == config) {
@@ -58,7 +66,6 @@ export class CWXHJSSdk {
                 // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
                 reject(res)
             });
-
         })
     }
 

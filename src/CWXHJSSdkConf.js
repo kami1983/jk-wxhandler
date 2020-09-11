@@ -74,12 +74,30 @@ export class CWXHJSSdkConf {
 
     /**
      * 设置测试状态函数，该函数会改变debug 配置变量的值
+     * (该函数已作废，通过函数setDebugStatus(Boolean)进行代替)
      * @param {Boolean} status
      * @return {CWXHJSSdkConf}
      * */
     setDebug(status) {
+        this.setDebugStatus(status)
+    }
+
+    /**
+     * 设置测试状态函数，该函数会改变debug 配置变量的值
+     * @param {Boolean} status
+     * @return {CWXHJSSdkConf}
+     * */
+    setDebugStatus(status) {
         this.config.debug = status
         return this
+    }
+
+    /**
+     * 返回配置文件的调试状态
+     * @return {Boolean}
+     * */
+    getDebugStatus() {
+        return this.config.debug
     }
 
     /**
