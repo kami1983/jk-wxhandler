@@ -79,7 +79,7 @@ export class CWXHJSSdkConf {
      * @return {CWXHJSSdkConf}
      * */
     setDebug(status) {
-        this.setDebugStatus(status)
+        return this.setDebugStatus(status)
     }
 
     /**

@@ -1,3 +1,5 @@
+import {CKLFEApi} from "jk-felib"
+
 import {CWXHJSSdkConf} from "./CWXHJSSdkConf";
 import {CWXHJSSdk} from "./CWXHJSSdk";
 

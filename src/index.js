@@ -1,7 +1,4 @@
 // 插件入口
-
-import {CKLFEApi} from "jk-felib"
-
 import {CWXHJSSdk} from "./CWXHJSSdk";
 import {CWXHJSSdkConf} from "./CWXHJSSdkConf";
 import {CWXHandler} from "./CWXHandler";

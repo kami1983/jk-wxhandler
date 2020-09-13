@@ -9,6 +9,10 @@
 
 ### 版本信息
 
+#### v1.1.1
+* 修正CWXHandler 没有正确引入 {CKLFEApi} 的问题。
+* 修正 setDebug(status) 没有return 函数的问题。
+
 #### v1.1.0
 * 新增单元测试，使用Jest 作为测试工具包。
 * 新增 wxhare.pages.页面名.break 配置段落，如果该配置段落等于true 表示跳过该路由的默认微信JSSDK分享设置。
