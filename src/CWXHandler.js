@@ -173,12 +173,31 @@ export class CWXHandler {
 
         return new Promise((resolve,reject) => {
 
-            if (this.wxshare_catch_page_name != cachename) {
+            if (this.wxshare_catch_page_name != cachename && false == this.wxshare_catch_is_makeing) {
+                // 配置全局属性表示缓存正在生成中。
+                this.wxshare_catch_is_makeing = true
+                
+                // 获取默认的配置文件信息
+                let wxshare = this.options.wxshare
+
+                // 内部变量决定是否继续获取JSSDK
+                // let isgoon = true 
+
+                // 先判断该页面是否配置了break 变量
+                if("pages" in wxshare) {
+                    if (cachename in wxshare.pages) {
+                        if(true == wxshare.pages[cachename].break) {
+                            // 如果当前页面分享跳出的话，直接跳出这个函数
+                            reject(new Error(`wxshare.pages.${cachename}.break 被设置为true，表示跳过该页面分享设置。`))
+                            // isgoon = false
+                            return 
+                        }
+                    }
+                }
+                
+
                 // 如果这两个相等则不需要继续配置，也就是如果路由页面相同则不重新配置对象
-                if (false == this.wxshare_catch_is_makeing) {
-                    // 配置全局属性表示缓存正在生成中。
-                    this.wxshare_catch_is_makeing = true
-                    
+                // if (false == this.wxshare_catch_is_makeing) {
                     // 访问wxsdk
                     this.catch_wxsdk().then((wxsdk) => {
     
@@ -188,18 +207,11 @@ export class CWXHandler {
                         this.wxshare_catch_page_name = cachename
     
                         // 调用封装好的分享消息接口
-                        // 获取默认的配置文件信息
-                        let wxshare = this.options.wxshare
-    
                         let pageshareinfo = undefined
                         if("pages" in wxshare) {
                             
                             if (cachename in wxshare.pages) {
-                                if(true == wxshare.pages[cachename].break) {
-                                    // 如果当前页面分享跳出的话，直接跳出这个函数
-                                    reject(new Error(`wxshare.pages.${cachename}.break 被设置为true，表示跳过该页面分享设置。`))
-                                    return ;
-                                }
+                                
                                 // 存在单页面的特殊配置信息
                                 pageshareinfo = wxshare.pages[cachename]
                             }
@@ -231,7 +243,7 @@ export class CWXHandler {
                         // 分享生成失败
                         reject(err)
                     })
-                }
+                // }
             }else{
                 // 如果页面已经已经缓存过则无法继续缓存
                 reject(new Error(`${this.wxshare_catch_page_name} :: 页面缓存已经生成，无需重复生成`))

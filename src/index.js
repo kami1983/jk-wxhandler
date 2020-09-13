@@ -86,10 +86,6 @@ const wxhandler = {
 
         Vue.mixin({
             mounted: function () {
-
-            },
-            created: function () {
-
                 let page_name = ""
                 if (undefined == this.$route || undefined == this.$route.name) {
                     page_name = "__notpagename__"
@@ -97,7 +93,16 @@ const wxhandler = {
                     page_name = this.$route.name
                 }
 
-                this.$wxhandler.makeDefaultWxShare(page_name)
+                this.$wxhandler.makeDefaultWxShare(page_name).then((res)=>{
+                    console.log("makeDefaultWxShare Success", page_name, res)
+                }).catch((err)=>{
+                    console.log("makeDefaultWxShare Faild", page_name, err)
+                    // throw err
+                })
+            },
+            created: function () {
+
+                
 
                 // if("wxshare" in this.$wxhandler.options) {
                 //     // 判断是否存在分享配置文件

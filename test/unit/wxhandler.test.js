@@ -191,6 +191,7 @@ describe('测试wxhandler 对象', () => {
         
         await oper.makeDefaultWxShare("Video").catch((err)=>{
             // 新生成的页面分享信息也同样，无法通过makeDefaultWxShare重复生成
+            console.log(err)
             expect(err).toBeInstanceOf(Error)
         })
     })

@@ -9,6 +9,12 @@
 
 ### 版本信息
 
+#### v1.1.5
+* 修改 mixin.created 到  mixin.mounted
+
+#### v1.1.4
+* BUG 修正，包括pages.break 函数放置位置，install mixin.created 方法调用修改等。
+
 #### v1.1.2
 * 修正index.js 没有引入测试逻辑的BUG。
 
