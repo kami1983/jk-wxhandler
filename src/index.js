@@ -89,6 +89,8 @@ const wxhandler = {
                 let page_name = ""
                 if (undefined == this.$route || undefined == this.$route.name) {
                     page_name = "__notpagename__"
+                    // 就算启用路由这个判断也还会进入，比较奇怪，这里直接退出就好了，不进行__notpagename__ 的SDK 生成。
+                    return 
                 }else{
                     page_name = this.$route.name
                 }
