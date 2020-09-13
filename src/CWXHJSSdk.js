@@ -148,22 +148,28 @@ export class CWXHJSSdk {
         if(undefined != appmsg) this.wxconfig.addApiList("updateAppMessageShareData")
         if(undefined != timeline) this.wxconfig.addApiList("updateTimelineShareData")
 
-        // 对JSSDK 进行配置
-        this.wxConfig().then((wxsdk) => {
 
-            if (undefined != appmsg) {
-                // 当配置文件存在时进入这里
-                this.wx.updateAppMessageShareData(appmsg)
-            }
+        return new Promise((resolve, reject) => {
+            // 对JSSDK 进行配置
+            this.wxConfig().then((wxsdk) => {
 
-            if (undefined != timeline) {
-                // 当配置文件存在时进入这里。
-                this.wx.updateTimelineShareData(timeline)
-            }
+                if (undefined != appmsg) {
+                    // 当配置文件存在时进入这里
+                    this.wx.updateAppMessageShareData(appmsg)
+                }
 
-        }).catch((err) => {
-            throw err
+                if (undefined != timeline) {
+                    // 当配置文件存在时进入这里。
+                    this.wx.updateTimelineShareData(timeline)
+                }
+                resolve({
+                    appmsg: appmsg,
+                    timeline: timeline,
+                })
+
+            }).catch((err) => {
+                throw err
+            })
         })
-
     }
 }

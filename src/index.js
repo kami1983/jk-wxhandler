@@ -92,26 +92,21 @@ const wxhandler = {
 
             },
             created: function () {
-
-
-
                 if("wxshare" in this.$wxhandler.options) {
                     // 判断是否存在分享配置文件
-
                     // 获取page_name
                     let page_name = ""
                     if (undefined == this.$route || undefined == this.$route.name) {
                         page_name = "__notpagename__"
                     }
 
-                    console.log("RUN 1 ", page_name )
                     if (this.$wxhandler.wxshare_catch_page_name != page_name) {
 
                         // 如果这两个相等则不需要继续配置，也就是如果路由页面相同则不重新配置对象
                         if (false == this.$wxhandler.wxshare_catch_is_makeing) {
                             // 配置全局属性表示缓存正在生成中。
                             this.$wxhandler.wxshare_catch_is_makeing = true
-                            console.log("RUN 1.1 ", this.$wxhandler.wxshare_catch_is_makeing )
+                            // console.log("RUN 1.1 ", this.$wxhandler.wxshare_catch_is_makeing )
                             // 访问wxsdk
                             this.$wxhandler.catch_wxsdk().then((wxsdk) => {
 
@@ -167,80 +162,80 @@ const wxhandler = {
      * @param {JSON} config
      * @return {Promise}
      * */
-    configWithFeapi(config) {
+    // configWithFeapi(config) {
 
-        return new Promise((resolve, reject) => {
-            // 创建前后端组件，准备向后端发起请求
-            let feapi = new CKLFEApi(config.feapiconf)
+    //     return new Promise((resolve, reject) => {
+    //         // 创建前后端组件，准备向后端发起请求
+    //         let feapi = new CKLFEApi(config.feapiconf)
 
-            // console.log("SDK url :: ", location.href.split('#')[0])
+    //         // console.log("SDK url :: ", location.href.split('#')[0])
 
-            // 请求JSSDK 的配置信息并且传入当前页面的URL 地址
-            feapi.successCallback({
-                ic: config.port.ic,
-                im: config.port.im,
-                fps: {
-                    // 默认传入当前地址的URL
-                    url: location.href.split('#')[0],
-                }
-            }).then((res) => {
-                // 这里返回的是JSSDK 后端的处理配置信息
-                resolve(this.createWXHJSSDK(res))
+    //         // 请求JSSDK 的配置信息并且传入当前页面的URL 地址
+    //         feapi.successCallback({
+    //             ic: config.port.ic,
+    //             im: config.port.im,
+    //             fps: {
+    //                 // 默认传入当前地址的URL
+    //                 url: location.href.split('#')[0],
+    //             }
+    //         }).then((res) => {
+    //             // 这里返回的是JSSDK 后端的处理配置信息
+    //             resolve(this.createWXHJSSDK(res))
 
-            }).catch((err) => {
-                // 理论上这里不会进入
-                reject(err)
-            })
-        })
-    },
+    //         }).catch((err) => {
+    //             // 理论上这里不会进入
+    //             reject(err)
+    //         })
+    //     })
+    // },
     /**
      * 通过Promise 对象提供额外的可扩展的JSSDK 参数带入方式
      * @param {Promise} promiseobj 一个Promise 对象，可以是Axios对象，也可是其他的。
      * @return {Promise}
      *
      * */
-    configWithPromise(promiseobj) {
+    // configWithPromise(promiseobj) {
 
-        return new Promise((resolve, reject) => {
-            // 传入的是一个Promise 对象，很有可能是一个Axios对象。
-            promiseobj.then((res)=>{
-                // 返回wxhjssdk 对象，外部可以通过 .wxconfig 获取 CWXHJSSdkConf 进行配置修改
-                resolve(this.createWXHJSSDK(res))
-            }).catch((err)=>{
-                reject(err)
-            })
-        })
-    },
+    //     return new Promise((resolve, reject) => {
+    //         // 传入的是一个Promise 对象，很有可能是一个Axios对象。
+    //         promiseobj.then((res)=>{
+    //             // 返回wxhjssdk 对象，外部可以通过 .wxconfig 获取 CWXHJSSdkConf 进行配置修改
+    //             resolve(this.createWXHJSSDK(res))
+    //         }).catch((err)=>{
+    //             reject(err)
+    //         })
+    //     })
+    // },
     /**
      * 通过一个配置参数，返回封装后的Jssdk 对象
      * @param {JSON} config
      * @return {CWXHJSSdk}
      * */
-    createWXHJSSDK(config) {
+    // createWXHJSSDK(config) {
 
-        // 创建并初始化微信配置未见对象，并绑定到全局
-        let wxconfig = new CWXHJSSdkConf(config)
-        // 新增权限
-        // wxconfig.addApiList("updateAppMessageShareData")
-        // wxconfig.addApiList("updateTimelineShareData")
-        // wxconfig.setDebug(true)
+    //     // 创建并初始化微信配置未见对象，并绑定到全局
+    //     let wxconfig = new CWXHJSSdkConf(config)
+    //     // 新增权限
+    //     // wxconfig.addApiList("updateAppMessageShareData")
+    //     // wxconfig.addApiList("updateTimelineShareData")
+    //     // wxconfig.setDebug(true)
 
-        // 创建并初始化wxsdk 并绑定到全局对象
-        let wxhjssdk = new CWXHJSSdk(wxconfig)
+    //     // 创建并初始化wxsdk 并绑定到全局对象
+    //     let wxhjssdk = new CWXHJSSdk(wxconfig)
 
-        // 设置默认的微信分享信息
-        if (undefined != this.options.wxshare) {
-            // 先检查是否是一个多级配置文件
-            let defaultshareinfo = this.options.wxshare
-            if("default" in this.options.wxshare) {
-                // 判断wxshare 是否有default 配置
-                defaultshareinfo = this.options.wxshare.default
-            }
-            wxhjssdk.setDefaultShareInfo(defaultshareinfo)
-        }
+    //     // 设置默认的微信分享信息
+    //     if (undefined != this.options.wxshare) {
+    //         // 先检查是否是一个多级配置文件
+    //         let defaultshareinfo = this.options.wxshare
+    //         if("default" in this.options.wxshare) {
+    //             // 判断wxshare 是否有default 配置
+    //             defaultshareinfo = this.options.wxshare.default
+    //         }
+    //         wxhjssdk.setDefaultShareInfo(defaultshareinfo)
+    //     }
 
-        return wxhjssdk
-    },
+    //     return wxhjssdk
+    // },
 
 }
 

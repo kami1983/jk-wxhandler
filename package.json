@@ -1,6 +1,6 @@
 {
   "name": "jk-wxhandler",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "这个类库用于前端开发者很方便的使用微信JSSDK，而且这个组件封装了一些常用的特殊方法，比如分享。组件目前是基于VUE进行开发设计的。",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kami1983/jk-wxhandler.git"
+    "url": "https://github.com/kami1983/jk-wxhandler.git"
   },
   "keywords": [
     "wx",

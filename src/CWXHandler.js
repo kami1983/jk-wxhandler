@@ -54,7 +54,7 @@ export class CWXHandler {
     catch_wxsdk() {
         let _that = this
         return new Promise((resolve, reject) => {
-            console.log("RUN X1")
+
             if (undefined == _that.__save_catch_wxsdk) {
                 _that.create().then((wxsdk) => {
                     // console.log("JSSDK 配置文件创建成功 A2 ", wxsdk)
@@ -169,53 +169,72 @@ export class CWXHandler {
      * */
     makeDefaultWxShare(cachename = "__default_cachename__") {
 
-        if (this.wxshare_catch_page_name != cachename) {
-            // 如果这两个相等则不需要继续配置，也就是如果路由页面相同则不重新配置对象
-            if (false == this.wxshare_catch_is_makeing) {
-                // 配置全局属性表示缓存正在生成中。
-                this.wxshare_catch_is_makeing = true
-                console.log("RUN 1.1 ", this.wxshare_catch_is_makeing )
-                // 访问wxsdk
-                this.catch_wxsdk().then((wxsdk) => {
+        return new Promise((resolve,reject) => {
 
-                    // 标记设定，防止重复刷新
-                    this.wxshare_catch_is_makeing = false
-                    // 访问成功标记缓存的页面名称
-                    this.wxshare_catch_page_name = cachename
-
-                    // 调用封装好的分享消息接口
-                    // 获取默认的配置文件信息
-                    let wxshare = this.options.wxshare
-
-                    let pageshareinfo = undefined
-                    if("pages" in wxshare) {
-                        if (page_name in wxshare.pages) {
-                            if(true == wxshare.pages[page_name].break) {
-                                // 如果当前页面分享跳出的话，直接跳出这个函数
-                                return ;
+            if (this.wxshare_catch_page_name != cachename) {
+                // 如果这两个相等则不需要继续配置，也就是如果路由页面相同则不重新配置对象
+                if (false == this.wxshare_catch_is_makeing) {
+                    // 配置全局属性表示缓存正在生成中。
+                    this.wxshare_catch_is_makeing = true
+                    
+                    // 访问wxsdk
+                    this.catch_wxsdk().then((wxsdk) => {
+    
+                        // 标记设定，防止重复刷新
+                        this.wxshare_catch_is_makeing = false
+                        // 访问成功标记缓存的页面名称
+                        this.wxshare_catch_page_name = cachename
+    
+                        // 调用封装好的分享消息接口
+                        // 获取默认的配置文件信息
+                        let wxshare = this.options.wxshare
+    
+                        let pageshareinfo = undefined
+                        if("pages" in wxshare) {
+                            
+                            if (cachename in wxshare.pages) {
+                                if(true == wxshare.pages[cachename].break) {
+                                    // 如果当前页面分享跳出的话，直接跳出这个函数
+                                    reject(new Error(`wxshare.pages.${cachename}.break 被设置为true，表示跳过该页面分享设置。`))
+                                    return ;
+                                }
+                                // 存在单页面的特殊配置信息
+                                pageshareinfo = wxshare.pages[cachename]
                             }
-                            // 存在单页面的特殊配置信息
-                            pageshareinfo = wxshare.pages[page_name]
                         }
-                    }
+    
+                        let shareexecuter = null
+                        if(undefined == pageshareinfo) {
+                            // 分享配置文件
+                            shareexecuter = wxsdk.makeWxShare()
+                        }else{
+                            // 设置特殊的分享配置文件
+                            shareexecuter = wxsdk.makeWxShare(pageshareinfo)
+                        }
 
-                    if(undefined == pageshareinfo) {
-                        // 分享配置文件
-                        wxsdk.makeWxShare()
-                    }else{
-                        // 设置特殊的分享配置文件
-                        wxsdk.makeWxShare(pageshareinfo)
-                    }
+                        // 将函数值返回回去
+                        shareexecuter.then((wxshareconfig)=>{
+                            resolve(wxshareconfig)
+                        })
+                        
+    
+                    }).catch((err) => {
+                        // console.log("RUN 2 ", err )
+                        // 如果出现错误则重置全局变量，这会导致页面进入时重复刷新配置
+                        // 取消生成缓存设置
+                        this.wxshare_catch_is_makeing = false
+                        // 缓存的页面名称设置为空，因为请求失败
+                        this.wxshare_catch_page_name = undefined
 
-                }).catch((err) => {
-                    console.log("RUN 2 ", err )
-                    // 如果出现错误则重置全局变量，这会导致页面进入时重复刷新配置
-                    // 取消生成缓存设置
-                    this.wxshare_catch_is_makeing = false
-                    // 缓存的页面名称设置为空，因为请求失败
-                    this.wxshare_catch_page_name = undefined
-                })
+                        // 分享生成失败
+                        reject(err)
+                    })
+                }
+            }else{
+                // 如果页面已经已经缓存过则无法继续缓存
+                reject(new Error(`${this.wxshare_catch_page_name} :: 页面缓存已经生成，无需重复生成`))
             }
-        }
+            
+        })
     }
 }
