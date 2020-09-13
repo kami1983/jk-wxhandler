@@ -89,64 +89,74 @@ const wxhandler = {
 
             },
             created: function () {
-                if("wxshare" in this.$wxhandler.options) {
-                    // 判断是否存在分享配置文件
-                    // 获取page_name
-                    let page_name = ""
-                    if (undefined == this.$route || undefined == this.$route.name) {
-                        page_name = "__notpagename__"
-                    }
 
-                    if (this.$wxhandler.wxshare_catch_page_name != page_name) {
-
-                        // 如果这两个相等则不需要继续配置，也就是如果路由页面相同则不重新配置对象
-                        if (false == this.$wxhandler.wxshare_catch_is_makeing) {
-                            // 配置全局属性表示缓存正在生成中。
-                            this.$wxhandler.wxshare_catch_is_makeing = true
-                            // console.log("RUN 1.1 ", this.$wxhandler.wxshare_catch_is_makeing )
-                            // 访问wxsdk
-                            this.$wxhandler.catch_wxsdk().then((wxsdk) => {
-
-                                // 标记设定，防止重复刷新
-                                this.$wxhandler.wxshare_catch_is_makeing = false
-                                // 访问成功标记缓存的页面名称
-                                this.$wxhandler.wxshare_catch_page_name = page_name
-
-                                // 调用封装好的分享消息接口
-                                // 获取默认的配置文件信息
-                                let wxshare = this.$wxhandler.options.wxshare
-
-                                let pageshareinfo = undefined
-                                if("pages" in wxshare) {
-                                    if (page_name in wxshare.pages) {
-                                        if(true == wxshare.pages[page_name].break) {
-                                            // 如果当前页面分享跳出的话，直接跳出这个函数
-                                            return ;
-                                        }
-                                        // 存在单页面的特殊配置信息
-                                        pageshareinfo = wxshare.pages[page_name]
-                                    }
-                                }
-
-                                if(undefined == pageshareinfo) {
-                                    // 分享配置文件
-                                    wxsdk.makeWxShare()
-                                }else{
-                                    // 设置特殊的分享配置文件
-                                    wxsdk.makeWxShare(pageshareinfo)
-                                }
-
-                            }).catch((err) => {
-                                console.log("RUN 2 ", err )
-                                // 如果出现错误则重置全局变量，这会导致页面进入时重复刷新配置
-                                // 取消生成缓存设置
-                                this.$wxhandler.wxshare_catch_is_makeing = false
-                                // 缓存的页面名称设置为空，因为请求失败
-                                this.$wxhandler.wxshare_catch_page_name = undefined
-                            })
-                        }
-                    }
+                let page_name = ""
+                if (undefined == this.$route || undefined == this.$route.name) {
+                    page_name = "__notpagename__"
+                }else{
+                    page_name = this.$route.name
                 }
+
+                this.$wxhandler.makeDefaultWxShare(page_name)
+
+                // if("wxshare" in this.$wxhandler.options) {
+                //     // 判断是否存在分享配置文件
+                //     // 获取page_name
+                //     let page_name = ""
+                //     if (undefined == this.$route || undefined == this.$route.name) {
+                //         page_name = "__notpagename__"
+                //     }
+
+                //     if (this.$wxhandler.wxshare_catch_page_name != page_name) {
+
+                //         // 如果这两个相等则不需要继续配置，也就是如果路由页面相同则不重新配置对象
+                //         if (false == this.$wxhandler.wxshare_catch_is_makeing) {
+                //             // 配置全局属性表示缓存正在生成中。
+                //             this.$wxhandler.wxshare_catch_is_makeing = true
+                //             // console.log("RUN 1.1 ", this.$wxhandler.wxshare_catch_is_makeing )
+                //             // 访问wxsdk
+                //             this.$wxhandler.catch_wxsdk().then((wxsdk) => {
+
+                //                 // 标记设定，防止重复刷新
+                //                 this.$wxhandler.wxshare_catch_is_makeing = false
+                //                 // 访问成功标记缓存的页面名称
+                //                 this.$wxhandler.wxshare_catch_page_name = page_name
+
+                //                 // 调用封装好的分享消息接口
+                //                 // 获取默认的配置文件信息
+                //                 let wxshare = this.$wxhandler.options.wxshare
+
+                //                 let pageshareinfo = undefined
+                //                 if("pages" in wxshare) {
+                //                     if (page_name in wxshare.pages) {
+                //                         if(true == wxshare.pages[page_name].break) {
+                //                             // 如果当前页面分享跳出的话，直接跳出这个函数
+                //                             return ;
+                //                         }
+                //                         // 存在单页面的特殊配置信息
+                //                         pageshareinfo = wxshare.pages[page_name]
+                //                     }
+                //                 }
+
+                //                 if(undefined == pageshareinfo) {
+                //                     // 分享配置文件
+                //                     wxsdk.makeWxShare()
+                //                 }else{
+                //                     // 设置特殊的分享配置文件
+                //                     wxsdk.makeWxShare(pageshareinfo)
+                //                 }
+
+                //             }).catch((err) => {
+                //                 console.log("RUN 2 ", err )
+                //                 // 如果出现错误则重置全局变量，这会导致页面进入时重复刷新配置
+                //                 // 取消生成缓存设置
+                //                 this.$wxhandler.wxshare_catch_is_makeing = false
+                //                 // 缓存的页面名称设置为空，因为请求失败
+                //                 this.$wxhandler.wxshare_catch_page_name = undefined
+                //             })
+                //         }
+                //     }
+                // }
 
             }
         })

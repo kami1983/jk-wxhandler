@@ -9,6 +9,9 @@
 
 ### 版本信息
 
+#### v1.1.2
+* 修正index.js 没有引入测试逻辑的BUG。
+
 #### v1.1.1
 * 修正CWXHandler 没有正确引入 {CKLFEApi} 的问题。
 * 修正 setDebug(status) 没有return 函数的问题。
