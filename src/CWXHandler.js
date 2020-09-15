@@ -21,7 +21,7 @@ export class CWXHandler {
      * */
     catch_wxsdk_list = []
 
-    // 用来标记缓存是否正在生成中
+    // 用来标记缓存是否正在生成中（这个变量正在作废中）
     wxshare_catch_is_makeing = false
     // 用来记录缓存页面的名称
     wxshare_catch_page_name = undefined
@@ -173,9 +173,13 @@ export class CWXHandler {
 
         return new Promise((resolve,reject) => {
 
-            if (this.wxshare_catch_page_name != cachename && false == this.wxshare_catch_is_makeing) {
+            if (this.wxshare_catch_page_name != cachename ) {
+
+                // 访问成功标记缓存的页面名称
+                this.wxshare_catch_page_name = cachename
+
                 // 配置全局属性表示缓存正在生成中。
-                this.wxshare_catch_is_makeing = true
+                // this.wxshare_catch_is_makeing = true
                 
                 // 获取默认的配置文件信息
                 let wxshare = this.options.wxshare
@@ -188,7 +192,9 @@ export class CWXHandler {
                     if (cachename in wxshare.pages) {
                         if(true == wxshare.pages[cachename].break) {
                             // 如果当前页面分享跳出的话，直接跳出这个函数
+                            this.wxshare_catch_page_name = undefined // 页面不需要生成缓存，所以这个自然设置成undefined
                             reject(new Error(`wxshare.pages.${cachename}.break 被设置为true，表示跳过该页面分享设置。`))
+                            // this.wxshare_catch_is_makeing = false
                             // isgoon = false
                             return 
                         }
@@ -201,10 +207,9 @@ export class CWXHandler {
                     // 访问wxsdk
                     this.catch_wxsdk().then((wxsdk) => {
     
-                        // 标记设定，防止重复刷新
-                        this.wxshare_catch_is_makeing = false
-                        // 访问成功标记缓存的页面名称
-                        this.wxshare_catch_page_name = cachename
+                        // // 标记设定，防止重复刷新
+                        // this.wxshare_catch_is_makeing = false
+
     
                         // 调用封装好的分享消息接口
                         let pageshareinfo = undefined
@@ -236,7 +241,7 @@ export class CWXHandler {
                         // console.log("RUN 2 ", err )
                         // 如果出现错误则重置全局变量，这会导致页面进入时重复刷新配置
                         // 取消生成缓存设置
-                        this.wxshare_catch_is_makeing = false
+                        // this.wxshare_catch_is_makeing = false
                         // 缓存的页面名称设置为空，因为请求失败
                         this.wxshare_catch_page_name = undefined
 
@@ -246,7 +251,7 @@ export class CWXHandler {
                 // }
             }else{
                 // 如果页面已经已经缓存过则无法继续缓存
-                reject(new Error(`${this.wxshare_catch_page_name} :: 页面缓存已经生成，无需重复生成`))
+                reject(new Error(`${this.wxshare_catch_page_name} :: ${this.wxshare_catch_is_makeing} 页面缓存已经生成，或正在生成中，无需重复生成`))
             }
             
         })

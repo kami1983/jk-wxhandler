@@ -9,6 +9,7 @@
 
 ### 版本信息
 
+
 #### v1.1.6
 * 修改 mixin.created 到  mixin.mounted
 
