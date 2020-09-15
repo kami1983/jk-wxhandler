@@ -1,6 +1,6 @@
 ### WXHandler 微信辅助支持组件
 
-* 该类库用来完成常规复用的WxJSDK 相关操作。
+* 该类库用来完成常规复用的微信JSSDK相关操作。
 
 #### 制定功能组
 
@@ -8,6 +8,32 @@
 * 差异化配置分享信息。
 
 ### 版本信息
+
+#### v1.1.7
+* 取消过期的变量 `wxshare_catch_is_makeing` ，但是在CWXHJSSdk 仍然保留，之后版本会删除这个变量。
+* 修正 `pages.break = true` 页面导致缓存 `wxshare_catch_is_makeing` 变量恒等 `true` 的BUG，解决办法是去掉了这个多余的变量标识。
+
+#### v1.1.6
+* 修改 mixin.created 到  mixin.mounted
+
+#### v1.1.4
+* BUG 修正，包括pages.break 函数放置位置，install mixin.created 方法调用修改等。
+
+#### v1.1.2
+* 修正index.js 没有引入测试逻辑的BUG。
+
+#### v1.1.1
+* 修正CWXHandler 没有正确引入 {CKLFEApi} 的问题。
+* 修正 setDebug(status) 没有return 函数的问题。
+
+#### v1.1.0
+* 新增单元测试，使用Jest 作为测试工具包。
+* 新增 wxhare.pages.页面名.break 配置段落，如果该配置段落等于true 表示跳过该路由的默认微信JSSDK分享设置。
+* 新增 CWXHandler 类，重构原来install 的对象结构，对于原来配置方式无影响。
+* 重构 CWXHJSSdk 类，更符合逻辑结构。
+* 其他相关性能改善。
+* package.json 中新增 weixin-js-sdk 依赖配置。
+* 更新 babel 编译工具为 7.x
 
 #### v1.0.2
 * 完善README文档
@@ -208,6 +234,9 @@ yarn add @babel/core --dev
 yarn add @babel/preset-env --dev
 yarn add @babel/cli --dev
 yarn add anymatch --dev
+
+//    "@vue/cli": "^4.5.4",
+//    "anymatch": "^3.1.1"
 
 
 

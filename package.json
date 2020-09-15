@@ -1,15 +1,15 @@
 {
   "name": "jk-wxhandler",
-  "version": "1.0.2",
+  "version": "1.1.7",
   "description": "这个类库用于前端开发者很方便的使用微信JSSDK，而且这个组件封装了一些常用的特殊方法，比如分享。组件目前是基于VUE进行开发设计的。",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --watch",
     "build": "babel src -d lib"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kami1983/jk-wxhandler.git"
+    "url": "https://github.com/kami1983/jk-wxhandler.git"
   },
   "keywords": [
     "wx",
@@ -30,11 +30,15 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-es2015": "^7.0.0-beta.53",
     "@babel/preset-stage-1": "^7.8.3",
+    "@vue/cli-plugin-unit-jest": "^4.5.4",
+    "@vue/test-utils": "^1.0.5",
+    "@types/jest": "^26.0.13",
     "babel-jest": "^26.3.0",
     "jest": "^26.4.2",
-    "jk-felib": "^1.1.9"
+    "vue": "^2.6.12"
   },
   "dependencies": {
-    "anymatch": "^3.1.1"
+    "jk-felib": "^1.1.9",
+    "weixin-js-sdk": "^1.6.0"
   }
 }
