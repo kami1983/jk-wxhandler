@@ -9,6 +9,9 @@
 
 ### 版本信息
 
+#### v1.1.8
+* 修正了promise sdk config.debug 属性无法默认生效的bug。
+
 #### v1.1.7
 * 取消过期的变量 `wxshare_catch_is_makeing` ，但是在CWXHJSSdk 仍然保留，之后版本会删除这个变量。
 * 修正 `pages.break = true` 页面导致缓存 `wxshare_catch_is_makeing` 变量恒等 `true` 的BUG，解决办法是去掉了这个多余的变量标识。

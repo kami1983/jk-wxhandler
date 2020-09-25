@@ -40,6 +40,7 @@ describe('测试wxhandler 对象', () => {
 
                 // 模拟一个假的JSSDK 配置信息，用于测试
                 let wxconfig = {
+                    debug: true,
                     appId: "wxabe6e769e5347571",
                     jsApiList: ["addCard", "chooseCard", "openCard"],
                     nonceStr: "JK-WeiX-148121jsapi",
@@ -75,6 +76,8 @@ describe('测试wxhandler 对象', () => {
     }
 
 
+
+
     /**
      * sdkconfig.opendebug 表示是否开启微信JSSDK 的调试模式。
      * */
@@ -87,6 +90,7 @@ describe('测试wxhandler 对象', () => {
 
         // 创建Handler 这个类最终被设置到Vue.$wxhandler 对象中
         expect(options.sdkconfig.opendebug).toBe(false)
+
         let oper = new CWXHandler(options)
 
         // 捕获wxsdk 对象
@@ -188,7 +192,7 @@ describe('测试wxhandler 对象', () => {
         let oper = new CWXHandler(options)
         expect(oper).toBeInstanceOf(CWXHandler)
         expect(oper.wxshare_catch_is_makeing).toBe(false)
-        
+
         await oper.makeDefaultWxShare("Video").catch((err)=>{
             // 新生成的页面分享信息也同样，无法通过makeDefaultWxShare重复生成
             console.log(err)
@@ -212,7 +216,7 @@ describe('测试wxhandler 对象', () => {
             List: {
                 appmsg: {
                     title: "List 特殊的配置信息"
-                } 
+                }
             }
         }
 

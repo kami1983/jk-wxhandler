@@ -144,8 +144,9 @@ export class CWXHandler {
         // 创建并初始化wxsdk 并绑定到全局对象
         let wxhjssdk = new CWXHJSSdk(wxconfig)
 
+        console.log('$$$$$$$2', sdkconfig.opendebug, config , '$$$$$$$')
         // 设置JSSDK 的调试状态
-        wxhjssdk.wxconfig.setDebugStatus(sdkconfig.opendebug)
+        wxhjssdk.wxconfig.setDebugStatus(undefined != sdkconfig.opendebug ? sdkconfig.opendebug : config.debug)
 
         // 设置默认的微信分享信息
         if (undefined != this.options.wxshare) {
